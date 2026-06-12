@@ -240,13 +240,13 @@
 // =======================================================
 // ⚠️ METS TON URL DE DÉPLOIEMENT WEB APP GOOGLE ICI ⚠️
 // =======================================================
-const API_URL = "TON_LIEN_SCRIPT_GOOGLE_ICI";
+const API_URL = "https://script.google.com/macros/s/AKfycbzuZ65T7u3XdWHW4TZkXSdAAxInD9tHCkVEQ7dzrwoBtuIqttdrBlBxgWS8067xiyE/exec";
 
 // =======================================================
 // CŒUR : COMMUNICATION API (REMPLACE google.script.run)
 // =======================================================
 async function apiCall(action, payload = {}) {
-    if(!API_URL || API_URL === "TON_LIEN_SCRIPT_GOOGLE_ICI") {
+    if(!API_URL || API_URL === "https://script.google.com/macros/s/AKfycbzuZ65T7u3XdWHW4TZkXSdAAxInD9tHCkVEQ7dzrwoBtuIqttdrBlBxgWS8067xiyE/exec) {
         alert("Erreur: URL de l'API manquante dans le code !");
         return;
     }
