@@ -240,13 +240,13 @@
 // =======================================================
 // ⚠️ METS TON URL DE DÉPLOIEMENT WEB APP GOOGLE ICI ⚠️
 // =======================================================
-const API_URL = "https://script.google.com/macros/s/AKfycbzk_hoL5HdPcKspJNuG7wMsUWoBBaCZfSC811X43udwBU5ZZDdycX20U3fS2Souaz4x/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycby3gB37-zFOUyX2p32hzPCdthkV1Fo2Dk0PxgKq-pI6V5EC7Zu3NUUv8jcD-NzQuIku/exec";
 
 // =======================================================
 // CŒUR : COMMUNICATION API (REMPLACE google.script.run)
 // =======================================================
 async function apiCall(action, payload = {}) {
-    if(!API_URL || API_URL === "https://script.google.com/macros/s/AKfycbzk_hoL5HdPcKspJNuG7wMsUWoBBaCZfSC811X43udwBU5ZZDdycX20U3fS2Souaz4x/exec") {
+    if(!API_URL || API_URL === "https://script.google.com/macros/s/AKfycby3gB37-zFOUyX2p32hzPCdthkV1Fo2Dk0PxgKq-pI6V5EC7Zu3NUUv8jcD-NzQuIku/exec") {
         alert("Erreur: URL de l'API manquante dans le code !");
         return;
     }
