@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GreenOvator 2026 🌿</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- jsQR fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+    <style>
+        /* === TOUT TON CSS RESTE EXACTEMENT LE MÊME === */
+        :root {
+            --primary: #16a34a; --primary-light: #22c55e; --primary-dark: #14532d;
+            --secondary: #0d9488; --accent: #f59e0b;
+            --success: #00C853; --warning: #FFD600; --error: #D50000; --info: #2979FF;
+            --gradient-primary: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            --gradient-success: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+            --gradient-error: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-cosmic: linear-gradient(160deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08); --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16); --shadow-xl: 0 16px 48px rgba(0,0,0,0.20);
+            --shadow-glow: 0 0 30px rgba(22,163,74,0.4);
+            --radius-sm:8px; --radius-md:12px; --radius-lg:20px; --radius-xl:28px; --radius-full:9999px;
+            --transition-base: 0.3s cubic-bezier(0.4,0,0.2,1);
+            --transition-bounce: 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);
+            --font-primary: 'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
+            --font-display: 'Space Grotesk','Poppins',sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+        html{scroll-behavior:smooth}
+        body{font-family:var(--font-primary);background:var(--gradient-cosmic);min-height:100vh;padding:1rem;overflow-x:hidden}
+        body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(34,197,94,0.28),transparent 50%),radial-gradient(circle at 80% 80%,rgba(6,182,212,0.22),transparent 50%),radial-gradient(circle at 40% 20%,rgba(245,158,11,0.16),transparent 50%);animation:backgroundShift 15s ease infinite;pointer-events:none;z-index:0}
+        @keyframes backgroundShift{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.8;transform:scale(1.1)}}
+        .stars{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0}
+        .star{position:absolute;width:3px;height:3px;background:rgba(134,239,172,0.9);border-radius:50%;box-shadow:0 0 4px rgba(74,222,128,0.7);animation:twinkle 3s infinite}
+        @keyframes twinkle{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+        .main-card{position:relative;max-width:100%;margin:0 auto 5rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:var(--radius-xl);padding:2rem 1.5rem;box-shadow:var(--shadow-xl),var(--shadow-glow);border:1px solid rgba(255,255,255,0.3);animation:slideUpFade 0.6s var(--transition-bounce);z-index:10}
+        @keyframes slideUpFade{from{opacity:0;transform:translateY(40px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+        @media(min-width:600px){.main-card{max-width:600px;padding:3rem 2.5rem}}
+        @media(min-width:992px){.main-card{max-width:850px;padding:3.5rem 3rem}}
+        .page{display:none}.page.active{display:block;animation:pageFadeIn 0.4s ease-out}
+        @keyframes pageFadeIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+        .header{text-align:center;margin-bottom:2.5rem}
+        .header h4{font-family:var(--font-display);font-size:clamp(1.8rem,6vw,2.5rem);font-weight:700;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.5rem 0;}
+        .header p{font-size:clamp(0.95rem,3vw,1.1rem);color:#666;}
+        .hero-badge{display:inline-block;background:var(--gradient-primary);color:#fff;padding:.35rem 1rem;border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;text-transform:uppercase;}
+        .logo-img-wrap{display:inline-flex;width:120px;height:120px;margin-bottom:.5rem;animation:float 3s ease-in-out infinite;}
+        .logo-img{width:100%;height:100%;object-fit:contain;}
+        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-15px)}}
+        .event-info{background:var(--gradient-primary);color:white;padding:1.25rem;border-radius:var(--radius-lg);margin-bottom:2rem;text-align:center;font-weight:500;box-shadow:var(--shadow-md);}
+        .input-field{position:relative;margin-bottom:1.8rem}
+        .input-field input{width:100%;padding:1rem 1rem 1rem 3.5rem;border:2px solid #e0e0e0;border-radius:var(--radius-md);font-size:16px;background:white;transition:0.3s;}
+        .input-field input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(22,163,74,0.1);}
+        .input-field .material-icons{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#999;}
+        .input-field label{position:absolute;left:3.5rem;top:50%;transform:translateY(-50%);color:#999;transition:0.3s;background:white;padding:0 .5rem;}
+        .input-field input:focus~label,.input-field input:not(:placeholder-shown)~label{top:0;left:2.5rem;font-size:12px;color:var(--primary);font-weight:500;}
+        .radio-group{margin:1.5rem 0}
+        .radio-option{position:relative;margin-bottom:.75rem}
+        .radio-option input[type="radio"]{position:absolute;opacity:0;cursor:pointer}
+        .radio-option .radio-label{display:flex;align-items:center;padding:1rem;background:#f8f9fa;border:2px solid #e0e0e0;border-radius:var(--radius-md);cursor:pointer;}
+        .radio-option input[type="radio"]:checked~.radio-label{background:rgba(22,163,74,0.05);border-color:var(--primary)}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;border:none;border-radius:var(--radius-full);font-size:1.05rem;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;}
+        .btn-primary{width:100%;background:var(--gradient-primary);color:white;box-shadow:var(--shadow-md);margin-top:1.5rem}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+        .btn-secondary{background:white;color:var(--primary);border:2px solid var(--primary)}
+        .btn-success{background:var(--gradient-success);color:white;box-shadow:var(--shadow-md)}
+        .loading{display:none;text-align:center;margin:2rem 0}.loading.active{display:block}
+        .spinner{width:50px;height:50px;margin:0 auto 1rem;border:4px solid rgba(22,163,74,0.1);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .qr-container{text-align:center;margin:2rem 0;}
+        #qrcode img{max-width:100%;padding:1.5rem;background:white;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);border:4px solid var(--primary)}
+        .info-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:1.5rem;border-radius:var(--radius-lg);margin:1.5rem 0;border-left:4px solid var(--primary)}
+        .scanner-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px dashed var(--primary);border-radius:var(--radius-lg);padding:2rem 1.5rem;margin:1.5rem 0;text-align:center}
+        .scanner-box .scan-icon{font-size:64px;color:var(--primary);margin-bottom:1rem;}
+        .scan-result-badge{display:none;align-items:center;gap:.5rem;background:#d4edda;border:1px solid #c3e6cb;border-radius:var(--radius-md);padding:.75rem 1rem;margin-top:1rem;color:#155724;}
+        .scan-result-badge.visible{display:flex}
+        .mode-toggle{display:flex;background:#f5f5f5;border-radius:var(--radius-full);padding:.375rem;margin:2rem 0}
+        .mode-toggle button{flex:1;padding:.875rem;border:none;background:transparent;border-radius:var(--radius-full);cursor:pointer;font-weight:600;}
+        .mode-toggle button.active{background:var(--gradient-primary);color:white;box-shadow:var(--shadow-md);}
+        .stats-card{background:linear-gradient(135deg,#e8eaf6,#c5cae9);padding:1.5rem;border-radius:var(--radius-lg);margin:2rem 0;}
+        .stat-item{margin:1rem 0;padding:1rem;background:white;border-radius:var(--radius-md);}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;}
+        .stat-card-admin{background:white;padding:2rem 1.5rem;border-radius:var(--radius-lg);text-align:center;box-shadow:var(--shadow-md);}
+        .table-container{overflow-x:auto;margin:1.5rem -1.5rem;padding:0 1.5rem;}
+        table{width:100%;background:white;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-md);border-collapse:collapse;}
+        table thead{background:var(--gradient-primary);color:white;}
+        table th, table td{padding:1rem;text-align:left;border-bottom:1px solid #f0f0f0;}
+        .fab{position:fixed;bottom:2rem;right:2rem;width:64px;height:64px;background:var(--gradient-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-lg);border:none;z-index:1000}
+        .modal{display:none;position:fixed;z-index:3000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);}
+        .modal.active{display:flex;align-items:center;justify-content:center}
+        .modal-content{background:white;padding:2rem;border-radius:var(--radius-xl);width:90%;max-width:500px;position:relative;}
+        .close-modal{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;background:#f5f5f5;border:none;cursor:pointer;}
+        .confirmation-modal{display:none;position:fixed;z-index:3500;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center}
+        .confirmation-modal.active{display:flex}
+        .confirmation-content{background:white;border-radius:var(--radius-xl);width:90%;max-width:550px;overflow:hidden;}
+        .confirmation-header{padding:3rem 2rem;text-align:center;color:white;}
+        .confirmation-header.success{background:var(--gradient-success)}
+        .confirmation-header.warning{background:var(--gradient-error)}
+        .confirmation-header.error{background:linear-gradient(135deg,#fc4a1a,#f7b733)}
+        .confirmation-body{padding:2.5rem 2rem;text-align:center}
+        .nav-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    </style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="main-card">
+    <!-- PAGE 1 : INSCRIPTION -->
+    <div id="registerPage" class="page active">
+        <div class="header">
+            <div class="header-icon-wrapper">
+                <div class="logo-img-wrap">
+                    <img src="https://raw.githubusercontent.com/hemritifss/logos/refs/heads/main/image-removebg-preview.png" alt="Greenovator 2026" class="logo-img">
+                </div>
+            </div><br>
+            <div class="hero-badge">Young Entrepreneur Rookies</div>
+            <p>Inscription à l'événement éco-innovation 🌱</p>
+        </div>
+        <form id="registrationForm">
+            <div class="input-field">
+                <input id="cin" type="text" required maxlength="8" placeholder=" ">
+                <label>Numéro CIN *</label>
+                <i class="material-icons">credit_card</i>
+            </div>
+            <div class="input-field">
+                <input id="name" type="text" required placeholder=" ">
+                <label>Nom Complet *</label>
+                <i class="material-icons">person</i>
+            </div>
+            <div class="input-field">
+                <input id="phone" type="tel" required placeholder=" ">
+                <label>Téléphone *</label>
+                <i class="material-icons">phone</i>
+            </div>
+            <div class="input-field">
+                <input id="email" type="email" placeholder=" ">
+                <label>Email</label>
+                <i class="material-icons">email</i>
+            </div>
+            <div class="radio-group">
+                <label>Avez-vous participé à une phase précédente ?</label>
+                <div class="radio-option">
+                    <input type="radio" name="phase" id="phase-none" value="Aucune" checked>
+                    <label class="radio-label" for="phase-none">Non, première participation</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" name="phase" id="phase-1" value="Phase 1">
+                    <label class="radio-label" for="phase-1">Oui, Phase 1</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="material-icons">how_to_reg</i> S'inscrire et Générer mon QR Code</button>
+        </form>
+        <div class="loading" id="registerLoading"><div class="spinner"></div><p>Inscription en cours…</p></div>
+    </div>
+
+    <!-- PAGE 2 : QR CODE -->
+    <div id="qrcodePage" class="page">
+        <div class="header">
+            <i class="material-icons" style="font-size:70px;color:var(--success)">check_circle</i>
+            <h4>Inscription Confirmée !</h4>
+        </div>
+        <div class="info-box" id="participantInfo"></div>
+        <div class="qr-container"><div id="qrcode"></div></div>
+        <div class="nav-buttons">
+            <a id="downloadBtn" class="btn btn-success" download="greenovator-qr.png"><i class="material-icons">download</i> Télécharger</a>
+            <button class="btn btn-secondary" onclick="showPage('registerPage'); document.getElementById('registrationForm').reset();"><i class="material-icons">home</i> Nouveau</button>
+        </div>
+    </div>
+
+    <!-- PAGE 3 : CHECK-IN -->
+    <div id="checkinPage" class="page">
+        <div class="header"><h4 id="pageTitle">🌿 Pointage GreenOvator</h4></div>
+        <div class="event-info" id="currentDay">Chargement...</div>
+        
+        <div class="mode-toggle">
+            <button id="btnModeEntry" class="active" onclick="switchMode('entry')">Entrée</button>
+            <button id="btnModeExit" onclick="switchMode('exit')">Sortie</button>
+        </div>
+
+        <div class="scanner-box">
+            <i class="material-icons scan-icon">qr_code_scanner</i>
+            <p>Ouvrir l'appareil photo et scanner le QR code</p>
+            <input type="file" id="qrNativeInput" accept="image/*" capture="environment" style="display:none;" onchange="processQRImage(event)">
+            <button class="btn btn-success" style="width:100%" onclick="document.getElementById('qrNativeInput').click()">
+                <i class="material-icons">camera_alt</i> Scanner le QR Code
+            </button>
+            <div id="scanLoading" style="display:none; margin-top:1rem; color:var(--primary);"><i class="material-icons">sync</i> Analyse en cours...</div>
+            <div class="scan-result-badge" id="scanResultBadge"><i class="material-icons">check_circle</i><span id="scanResultText">QR détecté !</span></div>
+        </div>
+
+        <div class="input-field">
+            <input id="manualId" type="text" placeholder=" ">
+            <label>ID Participant (manuel)</label>
+            <i class="material-icons">keyboard</i>
+        </div>
+        <button class="btn btn-primary" onclick="processManual()">Valider Manuellement</button>
+        
+        <div class="stats-card" id="stats" style="display:none"><div id="statsContent"></div></div>
+    </div>
+
+    <!-- PAGE 4 : ADMIN -->
+    <div id="adminPage" class="page">
+        <div class="header"><h4>📊 Dashboard Admin</h4></div>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="table-container">
+            <table id="participantsTableBox">
+                <thead><tr id="adminHeadRow"><th>CIN</th><th>Nom</th><th>Téléphone</th></tr></thead>
+                <tbody id="participantsTable"><tr><td>Chargement...</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<button class="fab" onclick="document.getElementById('secretModal').classList.add('active')"><i class="material-icons">lock</i></button>
+
+<div id="secretModal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="document.getElementById('secretModal').classList.remove('active')">×</button>
+        <h5 style="text-align:center; margin-bottom:1rem;">Accès Staff</h5>
+        <div class="input-field"><input id="secretKeyInput" type="password" placeholder=" "><label>Clé d'accès</label></div>
+        <button class="btn btn-primary" onclick="validateAccess('checkin')" style="margin-bottom:1rem;">Ouvrir Scanner</button>
+        <button class="btn btn-secondary" style="width:100%" onclick="validateAccess('admin')">Administration</button>
+    </div>
+</div>
+
+<div id="confirmationModal" class="confirmation-modal">
+    <div class="confirmation-content">
+        <div id="confirmationHeader" class="confirmation-header"><i class="material-icons" id="confirmationIcon" style="font-size:70px;">check_circle</i><h3 id="confirmationTitle"></h3></div>
+        <div class="confirmation-body">
+            <h5 id="confirmationMessage"></h5>
+            <div id="confirmationParticipant" style="text-align:left; background:#f5f5f5; padding:1rem; border-radius:12px; margin-bottom:1rem;"></div>
+            <button class="btn btn-primary" onclick="document.getElementById('confirmationModal').classList.remove('active')">Fermer</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =======================================================
+// ⚠️ METS TON URL DE DÉPLOIEMENT WEB APP GOOGLE ICI ⚠️
+// =======================================================
+const API_URL = "TON_LIEN_SCRIPT_GOOGLE_ICI";
+
+// =======================================================
+// CŒUR : COMMUNICATION API (REMPLACE google.script.run)
+// =======================================================
+async function apiCall(action, payload = {}) {
+    if(!API_URL || API_URL === "TON_LIEN_SCRIPT_GOOGLE_ICI") {
+        alert("Erreur: URL de l'API manquante dans le code !");
+        return;
+    }
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            // On utilise text/plain pour éviter l'erreur CORS preflight de Vercel/GitHub
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: action, payload: payload })
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error(err);
+        showToast("Erreur de connexion serveur", "error");
+        throw err;
+    }
+}
+
+// -------------------------------------------------------
+// UI UTILS
+function showToast(msg, type='info') { alert(msg); } // Simplifié pour la lisibilité
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if(id==='checkinPage') { loadCurrentDay(); loadStats(); }
+    if(id==='adminPage') loadAdminData();
+}
+
+function showConfirmation(type, title, message, html) {
+    const header = document.getElementById('confirmationHeader');
+    header.className = 'confirmation-header ' + (type === 'success' ? 'success' : 'error');
+    document.getElementById('confirmationIcon').innerText = type === 'success' ? 'check_circle' : 'error';
+    document.getElementById('confirmationTitle').innerText = title;
+    document.getElementById('confirmationMessage').innerText = message;
+    document.getElementById('confirmationParticipant').innerHTML = html || '';
+    document.getElementById('confirmationParticipant').style.display = html ? 'block' : 'none';
+    document.getElementById('confirmationModal').classList.add('active');
+}
+
+// -------------------------------------------------------
+// AUTHENTIFICATION
+async function validateAccess(accessType) {
+    const key = document.getElementById('secretKeyInput').value;
+    if(!key) return;
+    const isValid = await apiCall('validateSecretKey', { key, accessType });
+    if(isValid) {
+        document.getElementById('secretModal').classList.remove('active');
+        showPage(accessType === 'admin' ? 'adminPage' : 'checkinPage');
+    } else {
+        alert("Clé incorrecte");
+    }
+}
+
+// -------------------------------------------------------
+// INSCRIPTION
+document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('registerLoading').classList.add('active');
+    
+    const formData = {
+        cin: document.getElementById('cin').value,
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        previousPhase: document.querySelector('input[name="phase"]:checked').value
+    };
+
+    const res = await apiCall('registerParticipant', formData);
+    document.getElementById('registerLoading').classList.remove('active');
+
+    if(res && (res.success || res.duplicate)) {
+        const id = res.participantId;
+        const url = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + id;
+        document.getElementById('qrcode').innerHTML = `<img src="${url}">`;
+        document.getElementById('downloadBtn').href = url;
+        document.getElementById('participantInfo').innerHTML = `<b>${formData.name}</b><br>CIN: ${formData.cin}`;
+        showPage('qrcodePage');
+    } else {
+        alert(res.message || "Erreur d'inscription");
+    }
+});
+
+// -------------------------------------------------------
+// CHECKIN
+let currentMode = 'entry';
+function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('btnModeEntry').classList.toggle('active', mode==='entry');
+    document.getElementById('btnModeExit').classList.toggle('active', mode==='exit');
+}
+
+async function loadCurrentDay() {
+    const day = await apiCall('getCurrentDay');
+    document.getElementById('currentDay').innerText = day ? "📅 Aujourd'hui : " + day : "Aucun événement aujourd'hui";
+}
+
+async function processManual() {
+    const id = document.getElementById('manualId').value;
+    if(!id) return;
+    processById(id);
+}
+
+async function processById(id) {
+    const action = currentMode === 'entry' ? 'markAttendanceByScan' : 'markCheckoutByScan';
+    const res = await apiCall(action, { participantId: id });
+    
+    if(res && res.success) {
+        showConfirmation('success', '✅ Validé', res.message, `<b>${res.participant.name}</b><br>${res.time}`);
+        loadStats();
+    } else if(res && res.duplicate) {
+        showConfirmation('warning', '⚠️ Déjà scanné', res.message, '');
+    } else {
+        showConfirmation('error', '❌ Erreur', res ? res.message : "Inconnu", '');
+    }
+}
+
+// -------------------------------------------------------
+// SCANNER CAMERA NATIF (Identique à ta version qui marche super bien)
+async function processQRImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    document.getElementById('scanLoading').style.display = 'block';
+
+    try {
+        if ('BarcodeDetector' in window) {
+            const barcodeDetector = new BarcodeDetector({ formats: ['qr_code'] });
+            const imageBitmap = await createImageBitmap(file);
+            const barcodes = await barcodeDetector.detect(imageBitmap);
+            if (barcodes.length > 0) {
+                document.getElementById('scanLoading').style.display = 'none';
+                handleScannedQR(barcodes[0].rawValue);
+                return; 
+            }
+        }
+    } catch(e) {}
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            canvas.width = img.width; canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const imgData = ctx.getImageData(0, 0, img.width, img.height);
+            const qr = jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "attemptBoth" });
+            document.getElementById('scanLoading').style.display = 'none';
+            if(qr) handleScannedQR(qr.data);
+            else alert("Aucun QR détecté");
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function handleScannedQR(id) {
+    document.getElementById('scanResultBadge').classList.add('visible');
+    document.getElementById('manualId').value = id;
+    processById(id);
+    setTimeout(() => document.getElementById('scanResultBadge').classList.remove('visible'), 3000);
+}
+
+// -------------------------------------------------------
+// ADMIN STATS
+async function loadStats() {
+    const res = await apiCall('getEventStats');
+    if(res && res.success && res.stats) {
+        document.getElementById('stats').style.display = 'block';
+        let h = '';
+        Object.entries(res.stats.byDay).forEach(([day, d]) => {
+            h += `<div><b>${day}</b> : 🔵 ${d.entries} | 🔴 ${d.exits}</div>`;
+        });
+        document.getElementById('statsContent').innerHTML = h;
+    }
+}
+
+async function loadAdminData() {
+    const res = await apiCall('getAllParticipantsAdmin');
+    if(res && res.success) {
+        document.getElementById('totalParticipants').innerText = res.participants.length;
+        document.getElementById('adminHeadRow').innerHTML = `<th>Nom</th><th>CIN</th>` + res.eventDays.map(d=>`<th>${d}</th>`).join('');
+        document.getElementById('participantsTable').innerHTML = res.participants.map(p => {
+            const attendance = res.eventDays.map(d => {
+                const a = p.attendance[d];
+                return `<td>🔵 ${a.entry}<br>🔴 ${a.exit}</td>`;
+            }).join('');
+            return `<tr><td><b>${p.name}</b></td><td>${p.cin}</td>${attendance}</tr>`;
+        }).join('');
+    }
+}
+</script>
+</body>
+</html>
