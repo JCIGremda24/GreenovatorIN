@@ -1,313 +1,624 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GreenOvator 2026 🌿</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- jsQR fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1B3328">
+<title>GreenOvator 2026 🌿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<style>
+/* =================================================================
+   TOKENS — "Eco Passport": soil-green canvas, warm paper cards,
+   ink-stamp motif tying the logo / QR badge / confirmations together
+   ================================================================= */
+:root{
+  --soil:#1B3328; --soil-light:#27493A;
+  --paper:#FBF6EC; --paper-dim:#F1E8D5; --paper-line:#E8DFC9;
+  --ink:#20392E; --ink-soft:#6E8579;
+  --marigold:#EE9B3A; --marigold-deep:#C97A1E;
+  --leaf:#5C9079; --leaf-bright:#9CC9B3;
+  --clay:#D97757; --clay-deep:#B85A3D;
 
-    <style>
-        /* === TOUT TON CSS RESTE EXACTEMENT LE MÊME === */
-        :root {
-            --primary: #16a34a; --primary-light: #22c55e; --primary-dark: #14532d;
-            --secondary: #0d9488; --accent: #f59e0b;
-            --success: #00C853; --warning: #FFD600; --error: #D50000; --info: #2979FF;
-            --gradient-primary: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-            --gradient-success: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
-            --gradient-error: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-cosmic: linear-gradient(160deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08); --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16); --shadow-xl: 0 16px 48px rgba(0,0,0,0.20);
-            --shadow-glow: 0 0 30px rgba(22,163,74,0.4);
-            --radius-sm:8px; --radius-md:12px; --radius-lg:20px; --radius-xl:28px; --radius-full:9999px;
-            --transition-base: 0.3s cubic-bezier(0.4,0,0.2,1);
-            --transition-bounce: 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);
-            --font-primary: 'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
-            --font-display: 'Space Grotesk','Poppins',sans-serif;
-        }
-        *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-        html{scroll-behavior:smooth}
-        body{font-family:var(--font-primary);background:var(--gradient-cosmic);min-height:100vh;padding:1rem;overflow-x:hidden}
-        body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(34,197,94,0.28),transparent 50%),radial-gradient(circle at 80% 80%,rgba(6,182,212,0.22),transparent 50%),radial-gradient(circle at 40% 20%,rgba(245,158,11,0.16),transparent 50%);animation:backgroundShift 15s ease infinite;pointer-events:none;z-index:0}
-        @keyframes backgroundShift{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.8;transform:scale(1.1)}}
-        .stars{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0}
-        .star{position:absolute;width:3px;height:3px;background:rgba(134,239,172,0.9);border-radius:50%;box-shadow:0 0 4px rgba(74,222,128,0.7);animation:twinkle 3s infinite}
-        @keyframes twinkle{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
-        .main-card{position:relative;max-width:100%;margin:0 auto 5rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:var(--radius-xl);padding:2rem 1.5rem;box-shadow:var(--shadow-xl),var(--shadow-glow);border:1px solid rgba(255,255,255,0.3);animation:slideUpFade 0.6s var(--transition-bounce);z-index:10}
-        @keyframes slideUpFade{from{opacity:0;transform:translateY(40px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-        @media(min-width:600px){.main-card{max-width:600px;padding:3rem 2.5rem}}
-        @media(min-width:992px){.main-card{max-width:850px;padding:3.5rem 3rem}}
-        .page{display:none}.page.active{display:block;animation:pageFadeIn 0.4s ease-out}
-        @keyframes pageFadeIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-        .header{text-align:center;margin-bottom:2.5rem}
-        .header h4{font-family:var(--font-display);font-size:clamp(1.8rem,6vw,2.5rem);font-weight:700;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.5rem 0;}
-        .header p{font-size:clamp(0.95rem,3vw,1.1rem);color:#666;}
-        .hero-badge{display:inline-block;background:var(--gradient-primary);color:#fff;padding:.35rem 1rem;border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;text-transform:uppercase;}
-        .logo-img-wrap{display:inline-flex;width:120px;height:120px;margin-bottom:.5rem;animation:float 3s ease-in-out infinite;}
-        .logo-img{width:100%;height:100%;object-fit:contain;}
-        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-15px)}}
-        .event-info{background:var(--gradient-primary);color:white;padding:1.25rem;border-radius:var(--radius-lg);margin-bottom:2rem;text-align:center;font-weight:500;box-shadow:var(--shadow-md);}
-        .input-field{position:relative;margin-bottom:1.8rem}
-        .input-field input{width:100%;padding:1rem 1rem 1rem 3.5rem;border:2px solid #e0e0e0;border-radius:var(--radius-md);font-size:16px;background:white;transition:0.3s;}
-        .input-field input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(22,163,74,0.1);}
-        .input-field .material-icons{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#999;}
-        .input-field label{position:absolute;left:3.5rem;top:50%;transform:translateY(-50%);color:#999;transition:0.3s;background:white;padding:0 .5rem;}
-        .input-field input:focus~label,.input-field input:not(:placeholder-shown)~label{top:0;left:2.5rem;font-size:12px;color:var(--primary);font-weight:500;}
-        .radio-group{margin:1.5rem 0}
-        .radio-option{position:relative;margin-bottom:.75rem}
-        .radio-option input[type="radio"]{position:absolute;opacity:0;cursor:pointer}
-        .radio-option .radio-label{display:flex;align-items:center;padding:1rem;background:#f8f9fa;border:2px solid #e0e0e0;border-radius:var(--radius-md);cursor:pointer;}
-        .radio-option input[type="radio"]:checked~.radio-label{background:rgba(22,163,74,0.05);border-color:var(--primary)}
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;border:none;border-radius:var(--radius-full);font-size:1.05rem;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;}
-        .btn-primary{width:100%;background:var(--gradient-primary);color:white;box-shadow:var(--shadow-md);margin-top:1.5rem}
-        .btn-primary:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
-        .btn-secondary{background:white;color:var(--primary);border:2px solid var(--primary)}
-        .btn-success{background:var(--gradient-success);color:white;box-shadow:var(--shadow-md)}
-        .loading{display:none;text-align:center;margin:2rem 0}.loading.active{display:block}
-        .spinner{width:50px;height:50px;margin:0 auto 1rem;border:4px solid rgba(22,163,74,0.1);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .qr-container{text-align:center;margin:2rem 0;}
-        #qrcode img{max-width:100%;padding:1.5rem;background:white;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);border:4px solid var(--primary)}
-        .info-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:1.5rem;border-radius:var(--radius-lg);margin:1.5rem 0;border-left:4px solid var(--primary)}
-        .scanner-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px dashed var(--primary);border-radius:var(--radius-lg);padding:2rem 1.5rem;margin:1.5rem 0;text-align:center}
-        .scanner-box .scan-icon{font-size:64px;color:var(--primary);margin-bottom:1rem;}
-        .scan-result-badge{display:none;align-items:center;gap:.5rem;background:#d4edda;border:1px solid #c3e6cb;border-radius:var(--radius-md);padding:.75rem 1rem;margin-top:1rem;color:#155724;}
-        .scan-result-badge.visible{display:flex}
-        .mode-toggle{display:flex;background:#f5f5f5;border-radius:var(--radius-full);padding:.375rem;margin:2rem 0}
-        .mode-toggle button{flex:1;padding:.875rem;border:none;background:transparent;border-radius:var(--radius-full);cursor:pointer;font-weight:600;}
-        .mode-toggle button.active{background:var(--gradient-primary);color:white;box-shadow:var(--shadow-md);}
-        .stats-card{background:linear-gradient(135deg,#e8eaf6,#c5cae9);padding:1.5rem;border-radius:var(--radius-lg);margin:2rem 0;}
-        .stat-item{margin:1rem 0;padding:1rem;background:white;border-radius:var(--radius-md);}
-        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;}
-        .stat-card-admin{background:white;padding:2rem 1.5rem;border-radius:var(--radius-lg);text-align:center;box-shadow:var(--shadow-md);}
-        .table-container{overflow-x:auto;margin:1.5rem -1.5rem;padding:0 1.5rem;}
-        table{width:100%;background:white;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-md);border-collapse:collapse;}
-        table thead{background:var(--gradient-primary);color:white;}
-        table th, table td{padding:1rem;text-align:left;border-bottom:1px solid #f0f0f0;}
-        .fab{position:fixed;bottom:2rem;right:2rem;width:64px;height:64px;background:var(--gradient-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-lg);border:none;z-index:1000}
-        .modal{display:none;position:fixed;z-index:3000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);}
-        .modal.active{display:flex;align-items:center;justify-content:center}
-        .modal-content{background:white;padding:2rem;border-radius:var(--radius-xl);width:90%;max-width:500px;position:relative;}
-        .close-modal{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;background:#f5f5f5;border:none;cursor:pointer;}
-        .confirmation-modal{display:none;position:fixed;z-index:3500;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center}
-        .confirmation-modal.active{display:flex}
-        .confirmation-content{background:white;border-radius:var(--radius-xl);width:90%;max-width:550px;overflow:hidden;}
-        .confirmation-header{padding:3rem 2rem;text-align:center;color:white;}
-        .confirmation-header.success{background:var(--gradient-success)}
-        .confirmation-header.warning{background:var(--gradient-error)}
-        .confirmation-header.error{background:linear-gradient(135deg,#fc4a1a,#f7b733)}
-        .confirmation-body{padding:2.5rem 2rem;text-align:center}
-        .nav-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-    </style>
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+  --shadow-card:0 24px 60px -16px rgba(10,25,18,.45);
+  --shadow-soft:0 10px 26px -12px rgba(10,25,18,.22);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--marigold-deep);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+body{
+  font-family:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--soil); color:var(--paper);
+  min-height:100vh; padding:1.25rem 1rem 6rem; position:relative; overflow-x:hidden;
+}
+
+/* ambient backdrop — quiet, no movement */
+.bg-decor{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-decor::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(156,201,179,.12),transparent 60%)}
+.blob{position:absolute;border-radius:50%;filter:blur(90px)}
+.blob-1{width:420px;height:420px;background:var(--leaf-bright);opacity:.10;top:-150px;left:-130px}
+.blob-2{width:380px;height:380px;background:var(--marigold);opacity:.08;bottom:-130px;right:-110px}
+
+/* layout */
+.app-shell{position:relative;z-index:10;max-width:460px;margin:0 auto}
+@media(min-width:880px){.app-shell{max-width:840px}}
+
+.main-card{
+  position:relative; overflow:hidden;
+  background:var(--paper); color:var(--ink);
+  border-radius:var(--r-xl); padding:2.1rem 1.4rem 1.9rem;
+  box-shadow:var(--shadow-card);
+}
+.main-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--leaf),var(--marigold),var(--clay))}
+@media(min-width:640px){.main-card{padding:2.75rem 2.5rem}}
+
+.page{display:none}
+.page.active{display:block;animation:pageIn .4s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* =================================================================
+   STAMP MOTIF — the signature element
+   ================================================================= */
+.logo-stamp{
+  position:relative;width:92px;height:92px;margin:0 auto .85rem;
+  border-radius:50%;border:3px dashed var(--leaf);
+  display:flex;align-items:center;justify-content:center;
+  transform:rotate(-4deg); animation:sproutIn .6s var(--ease);
+}
+.logo-stamp::after{content:'';position:absolute;inset:8px;border:1px solid var(--leaf);border-radius:50%;opacity:.45}
+.logo-stamp img{width:54px;height:54px;object-fit:contain;transform:rotate(4deg)}
+@keyframes sproutIn{from{opacity:0;transform:rotate(-4deg) scale(.7)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+
+.stamp-label{
+  display:inline-flex;align-items:center;gap:.4rem;position:relative;
+  border:1.5px solid var(--leaf);border-radius:6px;padding:.35rem 1rem;
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:.66rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);
+  transform:rotate(-1.5deg);margin-bottom:.9rem;
+}
+.stamp-label::after{content:'';position:absolute;inset:3px;border:1px solid var(--leaf);border-radius:4px;opacity:.5}
+.stamp-label .material-symbols-outlined{font-size:14px}
+
+.modal-stamp{
+  width:64px;height:64px;margin:0 auto 1rem;border-radius:50%;
+  border:3px dashed currentColor;display:flex;align-items:center;justify-content:center;
+  transform:rotate(-4deg);
+}
+.modal-stamp .material-symbols-outlined{font-size:30px;transform:rotate(4deg)}
+.modal-stamp.success{color:var(--leaf)}
+.modal-stamp.warning{color:var(--marigold-deep)}
+.modal-stamp.error{color:var(--clay-deep)}
+
+/* =================================================================
+   HEADERS
+   ================================================================= */
+.page-header{text-align:center;margin-bottom:1.9rem}
+.page-title{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.55rem,5.5vw,2.05rem);color:var(--ink);margin-bottom:.35rem;line-height:1.15}
+.page-sub{color:var(--ink-soft);font-size:.92rem}
+
+.head-row{display:flex;align-items:center;gap:.85rem;margin-bottom:1.6rem}
+.head-row .head-text{flex:1;min-width:0}
+.head-row .stamp-label{margin-bottom:.3rem}
+.head-row .page-title{font-size:clamp(1.3rem,4.5vw,1.65rem);text-align:left;margin-bottom:0}
+
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:42px;height:42px;border-radius:50%;background:var(--paper-dim);
+  border:none;color:var(--ink);cursor:pointer;transition:.2s var(--ease);
+}
+.icon-btn:hover{background:var(--paper-line)}
+.icon-btn:active{transform:scale(.94)}
+
+/* =================================================================
+   FORM FIELDS
+   ================================================================= */
+.field{margin-bottom:1.15rem}
+.field label{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.4rem}
+.field .input-wrap{position:relative}
+.field .field-icon{position:absolute;left:.95rem;top:50%;transform:translateY(-50%);color:var(--leaf);font-size:20px;pointer-events:none}
+.field input{
+  width:100%;padding:.85rem .9rem .85rem 2.9rem;background:var(--paper-dim);
+  border:1.5px solid transparent;border-radius:var(--r-md);color:var(--ink);
+  font-size:16px;font-family:inherit;transition:.2s var(--ease);
+}
+.field input::placeholder{color:#ABB8AC}
+.field input:focus{outline:none;border-color:var(--leaf);background:var(--paper);box-shadow:0 0 0 4px rgba(92,144,121,.14)}
+
+/* choice cards */
+.choice-group{margin:1.3rem 0}
+.choice-group>span{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.6rem}
+.choice-card{display:block;position:relative;margin-bottom:.6rem;cursor:pointer}
+.choice-card input{position:absolute;opacity:0}
+.choice-row{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;background:var(--paper-dim);border:1.5px solid transparent;border-radius:var(--r-md);transition:.2s var(--ease)}
+.choice-row .material-symbols-outlined{color:var(--ink-soft);transition:.2s}
+.choice-row .txt{flex:1;font-weight:600;font-size:.9rem}
+.choice-dot{width:20px;height:20px;border-radius:50%;border:2px solid #D8CFBA;flex-shrink:0;position:relative;transition:.2s}
+.choice-card input:checked+.choice-row{border-color:var(--leaf);background:rgba(92,144,121,.08)}
+.choice-card input:checked+.choice-row .material-symbols-outlined{color:var(--leaf)}
+.choice-card input:checked+.choice-row .choice-dot{border-color:var(--leaf);background:var(--leaf)}
+.choice-card input:checked+.choice-row .choice-dot::after{content:'';position:absolute;inset:4px;border-radius:50%;background:var(--paper)}
+.choice-card input:focus-visible+.choice-row{outline:2px solid var(--marigold-deep);outline-offset:2px}
+
+/* =================================================================
+   BUTTONS
+   ================================================================= */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 1.6rem;border:none;border-radius:var(--r-md);font-family:'Fredoka',sans-serif;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s var(--ease);text-decoration:none}
+.btn:active{transform:scale(.97)}
+.btn-block{width:100%}
+.btn-primary{background:var(--marigold);color:var(--ink);box-shadow:0 10px 24px -8px rgba(238,155,58,.55)}
+.btn-primary:hover{background:var(--marigold-deep);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--leaf);border:1.5px solid var(--leaf)}
+.btn-outline:hover{background:rgba(92,144,121,.08)}
+.btn-row{display:flex;gap:.7rem;margin-top:1.4rem}
+.btn-row .btn{flex:1}
+
+/* loading */
+.loading{display:none;text-align:center;padding:2rem 0}
+.loading.active{display:block}
+.spinner{width:38px;height:38px;margin:0 auto .9rem;border:3px solid rgba(92,144,121,.15);border-top-color:var(--leaf);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:var(--ink-soft);font-size:.9rem;font-family:'Fredoka',sans-serif;font-weight:500}
+
+/* =================================================================
+   PASSPORT / QR PAGE
+   ================================================================= */
+.passport-card{background:var(--soil);color:var(--paper);border-radius:var(--r-lg);padding:1.75rem 1.25rem;margin:1.5rem 0;text-align:center;position:relative;overflow:hidden}
+.passport-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(156,201,179,.15),transparent 60%)}
+.passport-eyebrow{position:relative;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--leaf-bright);margin-bottom:.25rem}
+.passport-card h2{position:relative;font-family:'Fredoka',sans-serif;font-weight:700;font-size:1.25rem;margin-bottom:1.2rem}
+
+.qr-stamp{position:relative;width:fit-content;margin:0 auto 1.1rem;padding:13px;border:3px dashed var(--leaf-bright);border-radius:50%;transform:rotate(-3deg)}
+.qr-stamp::after{content:'';position:absolute;inset:8px;border:1px solid var(--leaf-bright);border-radius:50%;opacity:.4}
+.qr-stamp-inner{transform:rotate(3deg);background:var(--paper);border-radius:50%;padding:.8rem;display:flex}
+#qrcode img{display:block;border-radius:8px;width:150px;height:150px;animation:popIn .4s var(--ease)}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+
+.ticket-id{position:relative;font-family:'Fredoka',sans-serif;font-weight:700;letter-spacing:.12em;font-size:1.05rem;color:var(--marigold);margin-bottom:1.2rem}
+.participant-info{position:relative;display:flex;flex-direction:column;gap:.6rem;text-align:left}
+.info-row{display:flex;justify-content:space-between;align-items:center;gap:.75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-md);padding:.7rem 1rem}
+.info-row .label{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--leaf-bright)}
+.info-row .value{font-weight:700;font-family:'Fredoka',sans-serif;text-align:right;word-break:break-word}
+
+/* falling leaves — small celebratory touch */
+.leaf-fall{position:fixed;inset:0;pointer-events:none;z-index:1500;overflow:hidden}
+.leaf-fall i{position:absolute;top:-20px;width:9px;height:13px;border-radius:60% 0 60% 0;animation:leafDown linear forwards}
+@keyframes leafDown{to{transform:translateY(105vh) rotate(380deg);opacity:.15}}
+
+/* =================================================================
+   CHECK-IN PAGE
+   ================================================================= */
+.day-banner{display:flex;align-items:center;gap:.85rem;background:var(--paper-dim);border-radius:var(--r-lg);padding:.95rem 1.2rem;margin-bottom:1.4rem}
+.day-banner .material-symbols-outlined{font-size:26px;color:var(--leaf)}
+.day-banner .day-eyebrow{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.1rem}
+.day-banner .day-label{font-family:'Fredoka',sans-serif;font-weight:700;font-size:1rem;color:var(--ink)}
+
+.stamp-toggle{display:flex;gap:.85rem;margin-bottom:1.4rem}
+.stamp-option{flex:1;cursor:pointer;text-align:center;opacity:.42;transition:opacity .25s var(--ease);border:none;background:none;font-family:inherit}
+.stamp-option.active{opacity:1}
+.stamp-circle{width:46px;height:46px;margin:0 auto .5rem;border-radius:50%;border:2.5px dashed currentColor;display:flex;align-items:center;justify-content:center;transition:.25s var(--ease)}
+.stamp-option.active .stamp-circle{background:currentColor;border-style:solid}
+.stamp-option.active .stamp-circle .material-symbols-outlined{color:var(--paper)}
+.stamp-option.entry{color:var(--leaf)}
+.stamp-option.exit{color:var(--clay)}
+.stamp-text{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+
+.scanner-box{background:var(--paper-dim);border:1.5px dashed var(--paper-line);border-radius:var(--r-lg);padding:1.7rem 1.25rem;text-align:center;margin-bottom:1.3rem}
+.scanner-icon{width:62px;height:62px;margin:0 auto .9rem;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;color:var(--leaf);box-shadow:var(--shadow-soft)}
+.scanner-icon .material-symbols-outlined{font-size:28px}
+.scanner-box p{color:var(--ink-soft);font-size:.87rem;margin-bottom:1.1rem}
+.scan-result-badge{display:none;align-items:center;justify-content:center;gap:.45rem;background:rgba(92,144,121,.12);border:1px solid rgba(92,144,121,.3);border-radius:var(--r-md);padding:.65rem 1rem;margin-top:.9rem;color:var(--leaf);font-weight:600;font-size:.85rem}
+.scan-result-badge.visible{display:flex}
+.scan-loading{display:none;align-items:center;justify-content:center;gap:.45rem;margin-top:.9rem;color:var(--ink-soft);font-size:.85rem}
+.scan-loading.visible{display:flex}
+.scan-loading .material-symbols-outlined{animation:spin 1s linear infinite}
+
+.divider{display:flex;align-items:center;gap:.7rem;color:var(--ink-soft);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;margin:1.3rem 0;font-family:'Fredoka',sans-serif;font-weight:600}
+.divider::before,.divider::after{content:'';flex:1;border-top:1.5px dashed var(--paper-line)}
+
+.day-stats{margin-top:1.5rem}
+.day-stats h5{font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;color:var(--ink-soft);margin-bottom:.7rem;display:flex;align-items:center;gap:.4rem;text-transform:uppercase;letter-spacing:.06em}
+.day-row{display:flex;align-items:center;gap:.6rem;padding:.6rem 0;border-bottom:1px solid var(--paper-line)}
+.day-row:last-child{border-bottom:none}
+.day-row .day-name{flex:1;font-weight:600;font-size:.87rem;font-family:'Fredoka',sans-serif}
+.chip{display:inline-flex;align-items:center;gap:.25rem;padding:.28rem .6rem;border-radius:var(--r-sm);font-size:.74rem;font-weight:700}
+.chip .material-symbols-outlined{font-size:14px}
+.chip-in{background:rgba(92,144,121,.14);color:var(--leaf)}
+.chip-out{background:rgba(217,119,87,.14);color:var(--clay)}
+
+/* =================================================================
+   ADMIN PAGE
+   ================================================================= */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-bottom:1.5rem}
+@media(min-width:560px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-jar{background:var(--paper-dim);border-radius:var(--r-lg);padding:1.05rem .9rem;text-align:center}
+.stat-jar .material-symbols-outlined{font-size:22px;color:var(--leaf);margin-bottom:.3rem}
+.stat-jar .stat-value{font-family:'Fredoka',sans-serif;font-weight:700;font-size:1.55rem;color:var(--ink)}
+.stat-jar .stat-label{font-size:.66rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-top:.1rem}
+
+.table-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--paper-line)}
+.table-wrap::-webkit-scrollbar{height:6px}
+.table-wrap::-webkit-scrollbar-thumb{background:var(--paper-line);border-radius:3px}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+thead th{background:var(--paper-dim);color:var(--ink-soft);font-weight:700;text-align:left;padding:.8rem .9rem;white-space:nowrap;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;font-family:'Fredoka',sans-serif}
+tbody td{padding:.75rem .9rem;border-top:1px solid var(--paper-dim);white-space:nowrap}
+thead th:first-child,tbody td:first-child{position:sticky;left:0;background:var(--paper);z-index:2}
+thead th:first-child{background:var(--paper-dim)}
+.person-cell{display:flex;align-items:center;gap:.55rem;font-weight:700}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--leaf);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:.74rem;flex-shrink:0}
+.cell-time{display:flex;flex-direction:column;gap:.15rem;font-size:.75rem}
+.cell-time .t-in{color:var(--leaf);font-weight:700}
+.cell-time .t-out{color:var(--clay);font-weight:700}
+.cell-time .t-empty{color:#C9BFA6}
+
+.empty-state{text-align:center;padding:2.4rem 1rem;color:var(--ink-soft)}
+.empty-state .material-symbols-outlined{font-size:38px;display:block;margin-bottom:.5rem;color:var(--paper-line)}
+.empty-state p{font-family:'Fredoka',sans-serif;font-weight:600}
+
+/* =================================================================
+   FAB
+   ================================================================= */
+.fab{position:fixed;bottom:1.4rem;right:1.4rem;width:56px;height:56px;border-radius:50%;background:var(--marigold);color:var(--ink);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 28px -8px rgba(238,155,58,.6);z-index:1000;transition:.2s var(--ease)}
+.fab:hover{transform:scale(1.06) rotate(-6deg)}
+.fab:active{transform:scale(.94)}
+
+/* =================================================================
+   MODALS
+   ================================================================= */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(27,51,40,.55);backdrop-filter:blur(4px);z-index:3000;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--paper);color:var(--ink);border-radius:var(--r-xl);padding:2rem 1.5rem;width:100%;max-width:400px;position:relative;box-shadow:var(--shadow-card);animation:pageIn .3s var(--ease)}
+.modal-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;background:var(--paper-dim);border:none;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--paper-line)}
+.modal-box h3{font-family:'Fredoka',sans-serif;font-weight:700;text-align:center;margin-bottom:.4rem;font-size:1.2rem}
+.modal-msg{text-align:center;color:var(--ink-soft);font-size:.9rem;margin-bottom:1.1rem}
+.modal-participant{display:none;background:var(--paper-dim);border-radius:var(--r-md);padding:.85rem 1rem;font-size:.85rem;margin-bottom:1.2rem;line-height:1.65}
+.modal-participant.visible{display:block}
+.modal-participant b{font-family:'Fredoka',sans-serif}
+
+/* =================================================================
+   TOASTS
+   ================================================================= */
+.toast-stack{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:4000;display:flex;flex-direction:column;gap:.55rem;width:calc(100% - 2rem);max-width:380px}
+.toast{display:flex;align-items:center;gap:.6rem;background:var(--paper);color:var(--ink);border-radius:var(--r-md);padding:.8rem 1.05rem;box-shadow:var(--shadow-card);font-size:.86rem;font-weight:600;animation:toastIn .3s var(--ease)}
+.toast.out{animation:toastOut .25s var(--ease) forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(8px) scale(.97)}}
+.toast .material-symbols-outlined{font-size:20px;flex-shrink:0}
+.toast.success .material-symbols-outlined{color:var(--leaf)}
+.toast.error .material-symbols-outlined{color:var(--clay-deep)}
+.toast.info .material-symbols-outlined{color:var(--marigold-deep)}
+
+/* =================================================================
+   ICON BASE
+   ================================================================= */
+.material-symbols-outlined{
+  font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;
+  font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;
+  display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;
+  -webkit-font-smoothing:antialiased;vertical-align:middle;
+  font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24;
+}
+</style>
 </head>
 <body>
-<div class="stars" id="stars"></div>
+<div class="bg-decor"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
 
-<div class="main-card">
+<div class="app-shell">
+  <div class="main-card">
+
     <!-- PAGE 1 : INSCRIPTION -->
     <div id="registerPage" class="page active">
-        <div class="header">
-            <div class="header-icon-wrapper">
-                <div class="logo-img-wrap">
-                    <img src="https://raw.githubusercontent.com/hemritifss/logos/refs/heads/main/image-removebg-preview.png" alt="Greenovator 2026" class="logo-img">
-                </div>
-            </div><br>
-            <div class="hero-badge">Young Entrepreneur Rookies</div>
-            <p>Inscription à l'événement éco-innovation 🌱</p>
+      <div class="page-header">
+        <div class="logo-stamp">
+          <img src="https://raw.githubusercontent.com/hemritifss/logos/refs/heads/main/image-removebg-preview.png" alt="Logo GreenOvator 2026">
         </div>
-        <form id="registrationForm">
-            <div class="input-field">
-                <input id="cin" type="text" required maxlength="8" placeholder=" ">
-                <label>Numéro CIN *</label>
-                <i class="material-icons">credit_card</i>
-            </div>
-            <div class="input-field">
-                <input id="name" type="text" required placeholder=" ">
-                <label>Nom Complet *</label>
-                <i class="material-icons">person</i>
-            </div>
-            <div class="input-field">
-                <input id="phone" type="tel" required placeholder=" ">
-                <label>Téléphone *</label>
-                <i class="material-icons">phone</i>
-            </div>
-            <div class="input-field">
-                <input id="email" type="email" placeholder=" ">
-                <label>Email</label>
-                <i class="material-icons">email</i>
-            </div>
-            <div class="radio-group">
-                <label>Avez-vous participé à une phase précédente ?</label>
-                <div class="radio-option">
-                    <input type="radio" name="phase" id="phase-none" value="Aucune" checked>
-                    <label class="radio-label" for="phase-none">Non, première participation</label>
-                </div>
-                <div class="radio-option">
-                    <input type="radio" name="phase" id="phase-1" value="Phase 1">
-                    <label class="radio-label" for="phase-1">Oui, Phase 1</label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary"><i class="material-icons">how_to_reg</i> S'inscrire et Générer mon QR Code</button>
-        </form>
-        <div class="loading" id="registerLoading"><div class="spinner"></div><p>Inscription en cours…</p></div>
+        <div class="stamp-label"><span class="material-symbols-outlined">eco</span> Young Entrepreneur Rookies</div>
+        <h1 class="page-title">GreenOvator 2026</h1>
+        <p class="page-sub">Plante ta graine, lance ton projet éco 🌱</p>
+      </div>
+
+      <form id="registrationForm">
+        <div class="field">
+          <label for="cin">Numéro CIN</label>
+          <div class="input-wrap">
+            <span class="material-symbols-outlined field-icon">badge</span>
+            <input id="cin" type="text" inputmode="numeric" pattern="[0-9]*" required maxlength="8" placeholder="Ex. 12345678">
+          </div>
+        </div>
+        <div class="field">
+          <label for="name">Nom complet</label>
+          <div class="input-wrap">
+            <span class="material-symbols-outlined field-icon">person</span>
+            <input id="name" type="text" required placeholder="Prénom et nom">
+          </div>
+        </div>
+        <div class="field">
+          <label for="phone">Téléphone</label>
+          <div class="input-wrap">
+            <span class="material-symbols-outlined field-icon">call</span>
+            <input id="phone" type="tel" inputmode="tel" required placeholder="XX XXX XXX">
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email (optionnel)</label>
+          <div class="input-wrap">
+            <span class="material-symbols-outlined field-icon">mail</span>
+            <input id="email" type="email" placeholder="toi@exemple.com">
+          </div>
+        </div>
+
+        <div class="choice-group">
+          <span>As-tu participé à une phase précédente ?</span>
+          <label class="choice-card">
+            <input type="radio" name="phase" id="phase-none" value="Aucune" checked>
+            <span class="choice-row"><span class="material-symbols-outlined">new_releases</span><span class="txt">Non, première participation</span><span class="choice-dot"></span></span>
+          </label>
+          <label class="choice-card">
+            <input type="radio" name="phase" id="phase-1" value="Phase 1">
+            <span class="choice-row"><span class="material-symbols-outlined">military_tech</span><span class="txt">Oui, Phase 1</span><span class="choice-dot"></span></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <span class="material-symbols-outlined">how_to_reg</span> Générer mon badge
+        </button>
+      </form>
+
+      <div class="loading" id="registerLoading"><div class="spinner"></div><p>On prépare ton badge…</p></div>
     </div>
 
-    <!-- PAGE 2 : QR CODE -->
+    <!-- PAGE 2 : PASSEPORT / QR -->
     <div id="qrcodePage" class="page">
-        <div class="header">
-            <i class="material-icons" style="font-size:70px;color:var(--success)">check_circle</i>
-            <h4>Inscription Confirmée !</h4>
+      <div class="page-header">
+        <div class="modal-stamp success" style="width:74px;height:74px;margin-bottom:.8rem">
+          <span class="material-symbols-outlined" style="font-size:36px">eco</span>
         </div>
-        <div class="info-box" id="participantInfo"></div>
-        <div class="qr-container"><div id="qrcode"></div></div>
-        <div class="nav-buttons">
-            <a id="downloadBtn" class="btn btn-success" download="greenovator-qr.png"><i class="material-icons">download</i> Télécharger</a>
-            <button class="btn btn-secondary" onclick="showPage('registerPage'); document.getElementById('registrationForm').reset();"><i class="material-icons">home</i> Nouveau</button>
-        </div>
+        <h1 class="page-title">Bienvenue à bord !</h1>
+        <p class="page-sub">Voici ton passeport GreenOvator</p>
+      </div>
+
+      <div class="passport-card">
+        <div class="passport-eyebrow">GreenOvator · 2026</div>
+        <h2>Passeport Participant</h2>
+        <div class="qr-stamp"><div class="qr-stamp-inner" id="qrcode"></div></div>
+        <div class="ticket-id" id="participantIdText"></div>
+        <div class="participant-info" id="participantInfo"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="downloadBtn" onclick="downloadQR()"><span class="material-symbols-outlined">download</span> Télécharger</button>
+        <button class="btn btn-outline" onclick="goHome()"><span class="material-symbols-outlined">home</span> Nouveau</button>
+      </div>
     </div>
 
     <!-- PAGE 3 : CHECK-IN -->
     <div id="checkinPage" class="page">
-        <div class="header"><h4 id="pageTitle">🌿 Pointage GreenOvator</h4></div>
-        <div class="event-info" id="currentDay">Chargement...</div>
-        
-        <div class="mode-toggle">
-            <button id="btnModeEntry" class="active" onclick="switchMode('entry')">Entrée</button>
-            <button id="btnModeExit" onclick="switchMode('exit')">Sortie</button>
+      <div class="head-row">
+        <button class="icon-btn" onclick="goHome()" aria-label="Retour"><span class="material-symbols-outlined">arrow_back</span></button>
+        <div class="head-text">
+          <div class="stamp-label"><span class="material-symbols-outlined">qr_code_scanner</span> Staff</div>
+          <h1 class="page-title" id="pageTitle">Pointage</h1>
         </div>
+      </div>
 
-        <div class="scanner-box">
-            <i class="material-icons scan-icon">qr_code_scanner</i>
-            <p>Ouvrir l'appareil photo et scanner le QR code</p>
-            <input type="file" id="qrNativeInput" accept="image/*" capture="environment" style="display:none;" onchange="processQRImage(event)">
-            <button class="btn btn-success" style="width:100%" onclick="document.getElementById('qrNativeInput').click()">
-                <i class="material-icons">camera_alt</i> Scanner le QR Code
-            </button>
-            <div id="scanLoading" style="display:none; margin-top:1rem; color:var(--primary);"><i class="material-icons">sync</i> Analyse en cours...</div>
-            <div class="scan-result-badge" id="scanResultBadge"><i class="material-icons">check_circle</i><span id="scanResultText">QR détecté !</span></div>
+      <div class="day-banner">
+        <span class="material-symbols-outlined">event_available</span>
+        <div>
+          <div class="day-eyebrow">Aujourd'hui</div>
+          <div class="day-label" id="currentDay">Chargement…</div>
         </div>
+      </div>
 
-        <div class="input-field">
-            <input id="manualId" type="text" placeholder=" ">
-            <label>ID Participant (manuel)</label>
-            <i class="material-icons">keyboard</i>
+      <div class="stamp-toggle">
+        <button class="stamp-option entry active" id="modeEntryBtn" onclick="switchMode('entry')" type="button">
+          <span class="stamp-circle"><span class="material-symbols-outlined">login</span></span>
+          <span class="stamp-text">Entrée</span>
+        </button>
+        <button class="stamp-option exit" id="modeExitBtn" onclick="switchMode('exit')" type="button">
+          <span class="stamp-circle"><span class="material-symbols-outlined">logout</span></span>
+          <span class="stamp-text">Sortie</span>
+        </button>
+      </div>
+
+      <div class="scanner-box">
+        <div class="scanner-icon"><span class="material-symbols-outlined">qr_code_scanner</span></div>
+        <p>Scanne le QR code du participant</p>
+        <input type="file" id="qrNativeInput" accept="image/*" capture="environment" style="display:none" onchange="processQRImage(event)">
+        <button class="btn btn-primary btn-block" onclick="document.getElementById('qrNativeInput').click()">
+          <span class="material-symbols-outlined">camera_alt</span> Ouvrir la caméra
+        </button>
+        <div class="scan-loading" id="scanLoading"><span class="material-symbols-outlined">autorenew</span> Analyse en cours…</div>
+        <div class="scan-result-badge" id="scanResultBadge"><span class="material-symbols-outlined">check_circle</span><span id="scanResultText">QR détecté !</span></div>
+      </div>
+
+      <div class="divider">ou saisie manuelle</div>
+
+      <div class="field">
+        <label for="manualId">ID Participant</label>
+        <div class="input-wrap">
+          <span class="material-symbols-outlined field-icon">keyboard</span>
+          <input id="manualId" type="text" placeholder="GO-XXXXXXXX">
         </div>
-        <button class="btn btn-primary" onclick="processManual()">Valider Manuellement</button>
-        
-        <div class="stats-card" id="stats" style="display:none"><div id="statsContent"></div></div>
+      </div>
+      <button class="btn btn-outline btn-block" onclick="processManual()"><span class="material-symbols-outlined">task_alt</span> Valider</button>
+
+      <div class="day-stats" id="stats" style="display:none">
+        <h5><span class="material-symbols-outlined" style="font-size:16px">insights</span> Statistiques par jour</h5>
+        <div id="statsContent"></div>
+      </div>
     </div>
 
     <!-- PAGE 4 : ADMIN -->
     <div id="adminPage" class="page">
-        <div class="header"><h4>📊 Dashboard Admin</h4></div>
-        <div class="stats-grid" id="statsGrid"></div>
-        <div class="table-container">
-            <table id="participantsTableBox">
-                <thead><tr id="adminHeadRow"><th>CIN</th><th>Nom</th><th>Téléphone</th></tr></thead>
-                <tbody id="participantsTable"><tr><td>Chargement...</td></tr></tbody>
-            </table>
+      <div class="head-row">
+        <button class="icon-btn" onclick="goHome()" aria-label="Retour"><span class="material-symbols-outlined">arrow_back</span></button>
+        <div class="head-text">
+          <div class="stamp-label"><span class="material-symbols-outlined">admin_panel_settings</span> Admin</div>
+          <h1 class="page-title">Tableau de bord</h1>
         </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-jar"><span class="material-symbols-outlined">groups</span><div class="stat-value" id="totalParticipants">–</div><div class="stat-label">Inscrits</div></div>
+        <div class="stat-jar"><span class="material-symbols-outlined">login</span><div class="stat-value" id="todayEntries">–</div><div class="stat-label">Entrées</div></div>
+        <div class="stat-jar"><span class="material-symbols-outlined">logout</span><div class="stat-value" id="todayExits">–</div><div class="stat-label">Sorties</div></div>
+        <div class="stat-jar"><span class="material-symbols-outlined">group</span><div class="stat-value" id="todayInside">–</div><div class="stat-label">Présents</div></div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="participantsTableBox">
+          <thead><tr id="adminHeadRow"><th>Participant</th><th>CIN</th></tr></thead>
+          <tbody id="participantsTable"><tr><td colspan="2" style="text-align:center;padding:2rem;color:var(--ink-soft)">Chargement…</td></tr></tbody>
+        </table>
+      </div>
     </div>
+
+  </div>
 </div>
 
-<button class="fab" onclick="document.getElementById('secretModal').classList.add('active')"><i class="material-icons">lock</i></button>
+<button class="fab" onclick="document.getElementById('secretModal').classList.add('active')" aria-label="Accès staff"><span class="material-symbols-outlined">lock</span></button>
 
-<div id="secretModal" class="modal">
-    <div class="modal-content">
-        <button class="close-modal" onclick="document.getElementById('secretModal').classList.remove('active')">×</button>
-        <h5 style="text-align:center; margin-bottom:1rem;">Accès Staff</h5>
-        <div class="input-field"><input id="secretKeyInput" type="password" placeholder=" "><label>Clé d'accès</label></div>
-        <button class="btn btn-primary" onclick="validateAccess('checkin')" style="margin-bottom:1rem;">Ouvrir Scanner</button>
-        <button class="btn btn-secondary" style="width:100%" onclick="validateAccess('admin')">Administration</button>
+<div id="secretModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('secretModal')" aria-label="Fermer"><span class="material-symbols-outlined">close</span></button>
+    <div class="modal-stamp success"><span class="material-symbols-outlined">key</span></div>
+    <h3>Accès Staff</h3>
+    <p class="modal-msg">Entre la clé fournie par l'organisation</p>
+    <div class="field">
+      <label for="secretKeyInput">Clé d'accès</label>
+      <div class="input-wrap">
+        <span class="material-symbols-outlined field-icon">password</span>
+        <input id="secretKeyInput" type="password" placeholder="••••••••">
+      </div>
     </div>
+    <div class="btn-row" style="margin-top:.4rem">
+      <button class="btn btn-primary" onclick="validateAccess('checkin')"><span class="material-symbols-outlined">qr_code_scanner</span> Scanner</button>
+      <button class="btn btn-outline" onclick="validateAccess('admin')"><span class="material-symbols-outlined">admin_panel_settings</span> Admin</button>
+    </div>
+  </div>
 </div>
 
-<div id="confirmationModal" class="confirmation-modal">
-    <div class="confirmation-content">
-        <div id="confirmationHeader" class="confirmation-header"><i class="material-icons" id="confirmationIcon" style="font-size:70px;">check_circle</i><h3 id="confirmationTitle"></h3></div>
-        <div class="confirmation-body">
-            <h5 id="confirmationMessage"></h5>
-            <div id="confirmationParticipant" style="text-align:left; background:#f5f5f5; padding:1rem; border-radius:12px; margin-bottom:1rem;"></div>
-            <button class="btn btn-primary" onclick="document.getElementById('confirmationModal').classList.remove('active')">Fermer</button>
-        </div>
-    </div>
+<div id="confirmationModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('confirmationModal')" aria-label="Fermer"><span class="material-symbols-outlined">close</span></button>
+    <div id="confirmationStamp" class="modal-stamp success"><span class="material-symbols-outlined" id="confirmationIcon">check_circle</span></div>
+    <h3 id="confirmationTitle"></h3>
+    <p class="modal-msg" id="confirmationMessage"></p>
+    <div class="modal-participant" id="confirmationParticipant"></div>
+    <button class="btn btn-primary btn-block" onclick="closeModal('confirmationModal')">Fermer</button>
+  </div>
 </div>
+
+<div class="toast-stack" id="toastStack"></div>
+<div class="leaf-fall" id="leafFall"></div>
 
 <script>
 // =======================================================
-// ⚠️ METS TON URL DE DÉPLOIEMENT WEB APP GOOGLE ICI ⚠️
+// URL DE DÉPLOIEMENT WEB APP GOOGLE
 // =======================================================
 const API_URL = "https://script.google.com/macros/s/AKfycbwChFTlGHW-8DNwMWTHG2Zic3bSisv8vXaJqx42xBYEFZ-m-cMj73uDHpcbik9A4-pl/exec";
 
-// =======================================================
-// CŒUR : COMMUNICATION API (REMPLACE google.script.run)
-// =======================================================
+// -------------------------------------------------------
+// CŒUR : COMMUNICATION API
+// -------------------------------------------------------
 async function apiCall(action, payload = {}) {
-    if(!API_URL || API_URL === "https://script.google.com/macros/s/AKfycbwChFTlGHW-8DNwMWTHG2Zic3bSisv8vXaJqx42xBYEFZ-m-cMj73uDHpcbik9A4-pl/exec") {
-        alert("Erreur: URL de l'API manquante dans le code !");
-        return;
-    }
-    
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
-            // On utilise text/plain pour éviter l'erreur CORS preflight de Vercel/GitHub
+            // text/plain évite le preflight CORS depuis Vercel/GitHub Pages
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: action, payload: payload })
+            body: JSON.stringify({ action, payload })
         });
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (err) {
         console.error(err);
-        showToast("Erreur de connexion serveur", "error");
-        throw err;
+        showToast('Connexion au serveur impossible', 'error');
+        return null;
     }
 }
 
 // -------------------------------------------------------
-// UI UTILS
-function showToast(msg, type='info') { alert(msg); } // Simplifié pour la lisibilité
+// TOASTS
+// -------------------------------------------------------
+const TOAST_ICONS = { success: 'check_circle', error: 'error', info: 'info' };
+function showToast(msg, type = 'info') {
+    const stack = document.getElementById('toastStack');
+    const el = document.createElement('div');
+    el.className = 'toast ' + type;
+    el.innerHTML = '<span class="material-symbols-outlined">' + (TOAST_ICONS[type] || 'info') + '</span><span>' + msg + '</span>';
+    stack.appendChild(el);
+    setTimeout(() => {
+        el.classList.add('out');
+        setTimeout(() => el.remove(), 250);
+    }, 3800);
+}
+
+// -------------------------------------------------------
+// NAVIGATION
+// -------------------------------------------------------
 function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    if(id==='checkinPage') { loadCurrentDay(); loadStats(); }
-    if(id==='adminPage') loadAdminData();
+    if (id === 'checkinPage') { loadCurrentDay(); loadStats(); }
+    if (id === 'adminPage') loadAdminData();
 }
+function goHome() { showPage('registerPage'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
+// -------------------------------------------------------
+// MODALE DE CONFIRMATION
+// -------------------------------------------------------
+const CONFIRM_ICONS = { success: 'check_circle', warning: 'priority_high', error: 'error' };
 function showConfirmation(type, title, message, html) {
-    const header = document.getElementById('confirmationHeader');
-    header.className = 'confirmation-header ' + (type === 'success' ? 'success' : 'error');
-    document.getElementById('confirmationIcon').innerText = type === 'success' ? 'check_circle' : 'error';
+    const stampClass = type === 'success' ? 'success' : (type === 'warning' ? 'warning' : 'error');
+    document.getElementById('confirmationStamp').className = 'modal-stamp ' + stampClass;
+    document.getElementById('confirmationIcon').innerText = CONFIRM_ICONS[type] || 'info';
     document.getElementById('confirmationTitle').innerText = title;
     document.getElementById('confirmationMessage').innerText = message;
-    document.getElementById('confirmationParticipant').innerHTML = html || '';
-    document.getElementById('confirmationParticipant').style.display = html ? 'block' : 'none';
+    const p = document.getElementById('confirmationParticipant');
+    p.innerHTML = html || '';
+    p.classList.toggle('visible', !!html);
     document.getElementById('confirmationModal').classList.add('active');
 }
 
 // -------------------------------------------------------
-// AUTHENTIFICATION
+// AUTHENTIFICATION STAFF
+// -------------------------------------------------------
 async function validateAccess(accessType) {
     const key = document.getElementById('secretKeyInput').value;
-    if(!key) return;
+    if (!key) return;
     const isValid = await apiCall('validateSecretKey', { key, accessType });
-    if(isValid) {
-        document.getElementById('secretModal').classList.remove('active');
+    if (isValid === true) {
+        document.getElementById('secretKeyInput').value = '';
+        closeModal('secretModal');
         showPage(accessType === 'admin' ? 'adminPage' : 'checkinPage');
-    } else {
-        alert("Clé incorrecte");
+    } else if (isValid !== null) {
+        showToast('Clé incorrecte', 'error');
     }
 }
 
 // -------------------------------------------------------
 // INSCRIPTION
+// -------------------------------------------------------
+let currentQrUrl = '';
+
 document.getElementById('registrationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.style.display = 'none';
+    submitBtn.disabled = true;
     document.getElementById('registerLoading').classList.add('active');
-    
+
     const formData = {
         cin: document.getElementById('cin').value,
         name: document.getElementById('name').value,
@@ -317,73 +628,116 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
     };
 
     const res = await apiCall('registerParticipant', formData);
-    document.getElementById('registerLoading').classList.remove('active');
 
-    if(res && (res.success || res.duplicate)) {
+    document.getElementById('registerLoading').classList.remove('active');
+    form.style.display = 'block';
+    submitBtn.disabled = false;
+
+    if (res && (res.success || res.duplicate)) {
         const id = res.participantId;
-        const url = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + id;
-        document.getElementById('qrcode').innerHTML = `<img src="${url}">`;
-        document.getElementById('downloadBtn').href = url;
-        document.getElementById('participantInfo').innerHTML = `<b>${formData.name}</b><br>CIN: ${formData.cin}`;
+        currentQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=' + encodeURIComponent(id);
+        document.getElementById('qrcode').innerHTML = '<img src="' + currentQrUrl + '" alt="QR Code" width="150" height="150">';
+        document.getElementById('participantIdText').innerText = id;
+        document.getElementById('participantInfo').innerHTML =
+            '<div class="info-row"><span class="label">Nom</span><span class="value">' + formData.name + '</span></div>' +
+            '<div class="info-row"><span class="label">CIN</span><span class="value">' + formData.cin + '</span></div>';
+
         showPage('qrcodePage');
+        launchLeaves();
+        if (res.duplicate) showToast('CIN déjà enregistré — voici ton badge existant', 'info');
     } else {
-        alert(res.message || "Erreur d'inscription");
+        showToast((res && res.message) || "Erreur d'inscription", 'error');
     }
 });
 
+document.getElementById('phase-none').closest('form'); // no-op placeholder removed below
+
+async function downloadQR() {
+    if (!currentQrUrl) return;
+    try {
+        const resp = await fetch(currentQrUrl);
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'greenovator-badge.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    } catch (e) {
+        showToast("Maintiens le QR appuyé pour l'enregistrer", 'info');
+    }
+}
+
 // -------------------------------------------------------
-// CHECKIN
+// CHECK-IN
+// -------------------------------------------------------
 let currentMode = 'entry';
 function switchMode(mode) {
     currentMode = mode;
-    document.getElementById('btnModeEntry').classList.toggle('active', mode==='entry');
-    document.getElementById('btnModeExit').classList.toggle('active', mode==='exit');
+    document.getElementById('modeEntryBtn').classList.toggle('active', mode === 'entry');
+    document.getElementById('modeExitBtn').classList.toggle('active', mode === 'exit');
 }
 
 async function loadCurrentDay() {
     const day = await apiCall('getCurrentDay');
-    document.getElementById('currentDay').innerText = day ? "📅 Aujourd'hui : " + day : "Aucun événement aujourd'hui";
+    document.getElementById('currentDay').innerText = day ? day : "Aucun événement aujourd'hui";
 }
 
-async function processManual() {
-    const id = document.getElementById('manualId').value;
-    if(!id) return;
+function processManual() {
+    const id = document.getElementById('manualId').value.trim();
+    if (!id) { showToast('Saisis un ID participant', 'error'); return; }
     processById(id);
 }
 
 async function processById(id) {
     const action = currentMode === 'entry' ? 'markAttendanceByScan' : 'markCheckoutByScan';
     const res = await apiCall(action, { participantId: id });
-    
-    if(res && res.success) {
-        showConfirmation('success', '✅ Validé', res.message, `<b>${res.participant.name}</b><br>${res.time}`);
+    if (!res) return;
+
+    if (res.success) {
+        showConfirmation(
+            'success',
+            res.type === 'entry' ? 'Entrée tamponnée' : 'Sortie tamponnée',
+            res.message,
+            '<b>' + res.participant.name + '</b><br>CIN ' + res.participant.cin + ' · ' + res.time
+        );
         loadStats();
-    } else if(res && res.duplicate) {
-        showConfirmation('warning', '⚠️ Déjà scanné', res.message, '');
+    } else if (res.duplicate || res.noEntry) {
+        showConfirmation(
+            'warning',
+            'Déjà enregistré',
+            res.message,
+            res.participant ? ('<b>' + res.participant.name + '</b><br>CIN ' + res.participant.cin) : ''
+        );
     } else {
-        showConfirmation('error', '❌ Erreur', res ? res.message : "Inconnu", '');
+        showConfirmation('error', 'Oups', res.message || 'Une erreur est survenue', '');
     }
+    document.getElementById('manualId').value = '';
 }
 
 // -------------------------------------------------------
-// SCANNER CAMERA NATIF (Identique à ta version qui marche super bien)
+// SCANNER CAMÉRA
+// -------------------------------------------------------
 async function processQRImage(event) {
     const file = event.target.files[0];
     if (!file) return;
-    document.getElementById('scanLoading').style.display = 'block';
+    document.getElementById('scanLoading').classList.add('visible');
 
     try {
         if ('BarcodeDetector' in window) {
-            const barcodeDetector = new BarcodeDetector({ formats: ['qr_code'] });
-            const imageBitmap = await createImageBitmap(file);
-            const barcodes = await barcodeDetector.detect(imageBitmap);
-            if (barcodes.length > 0) {
-                document.getElementById('scanLoading').style.display = 'none';
-                handleScannedQR(barcodes[0].rawValue);
-                return; 
+            const detector = new BarcodeDetector({ formats: ['qr_code'] });
+            const bitmap = await createImageBitmap(file);
+            const codes = await detector.detect(bitmap);
+            if (codes.length > 0) {
+                document.getElementById('scanLoading').classList.remove('visible');
+                handleScannedQR(codes[0].rawValue);
+                event.target.value = '';
+                return;
             }
         }
-    } catch(e) {}
+    } catch (e) {}
 
     const reader = new FileReader();
     reader.onload = e => {
@@ -393,11 +747,12 @@ async function processQRImage(event) {
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
             canvas.width = img.width; canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
-            const imgData = ctx.getImageData(0, 0, img.width, img.height);
-            const qr = jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "attemptBoth" });
-            document.getElementById('scanLoading').style.display = 'none';
-            if(qr) handleScannedQR(qr.data);
-            else alert("Aucun QR détecté");
+            const data = ctx.getImageData(0, 0, img.width, img.height);
+            const qr = jsQR(data.data, data.width, data.height, { inversionAttempts: 'attemptBoth' });
+            document.getElementById('scanLoading').classList.remove('visible');
+            if (qr) handleScannedQR(qr.data);
+            else showToast('Aucun QR détecté', 'error');
+            event.target.value = '';
         };
         img.src = e.target.result;
     };
@@ -405,38 +760,96 @@ async function processQRImage(event) {
 }
 
 function handleScannedQR(id) {
-    document.getElementById('scanResultBadge').classList.add('visible');
+    const badge = document.getElementById('scanResultBadge');
+    badge.classList.add('visible');
     document.getElementById('manualId').value = id;
     processById(id);
-    setTimeout(() => document.getElementById('scanResultBadge').classList.remove('visible'), 3000);
+    setTimeout(() => badge.classList.remove('visible'), 3000);
 }
 
 // -------------------------------------------------------
-// ADMIN STATS
+// STATISTIQUES PAR JOUR (page check-in)
+// -------------------------------------------------------
 async function loadStats() {
     const res = await apiCall('getEventStats');
-    if(res && res.success && res.stats) {
+    if (res && res.success && res.stats) {
+        const entries = Object.entries(res.stats.byDay);
+        if (entries.length === 0) { document.getElementById('stats').style.display = 'none'; return; }
         document.getElementById('stats').style.display = 'block';
-        let h = '';
-        Object.entries(res.stats.byDay).forEach(([day, d]) => {
-            h += `<div><b>${day}</b> : 🔵 ${d.entries} | 🔴 ${d.exits}</div>`;
-        });
-        document.getElementById('statsContent').innerHTML = h;
+        document.getElementById('statsContent').innerHTML = entries.map(([day, d]) =>
+            '<div class="day-row"><span class="day-name">' + day + '</span>' +
+            '<span class="chip chip-in"><span class="material-symbols-outlined">login</span>' + d.entries + '</span>' +
+            '<span class="chip chip-out"><span class="material-symbols-outlined">logout</span>' + d.exits + '</span></div>'
+        ).join('');
     }
 }
 
+// -------------------------------------------------------
+// ADMIN
+// -------------------------------------------------------
 async function loadAdminData() {
-    const res = await apiCall('getAllParticipantsAdmin');
-    if(res && res.success) {
+    document.getElementById('participantsTable').innerHTML =
+        '<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--ink-soft)">Chargement…</td></tr>';
+
+    const [res, statsRes, dayRes] = await Promise.all([
+        apiCall('getAllParticipantsAdmin'),
+        apiCall('getEventStats'),
+        apiCall('getCurrentDay')
+    ]);
+
+    if (res && res.success) {
         document.getElementById('totalParticipants').innerText = res.participants.length;
-        document.getElementById('adminHeadRow').innerHTML = `<th>Nom</th><th>CIN</th>` + res.eventDays.map(d=>`<th>${d}</th>`).join('');
-        document.getElementById('participantsTable').innerHTML = res.participants.map(p => {
-            const attendance = res.eventDays.map(d => {
-                const a = p.attendance[d];
-                return `<td>🔵 ${a.entry}<br>🔴 ${a.exit}</td>`;
+
+        if (res.participants.length === 0) {
+            document.getElementById('participantsTable').innerHTML =
+                '<tr><td colspan="10"><div class="empty-state"><span class="material-symbols-outlined">eco</span><p>Aucun participant inscrit pour le moment</p></div></td></tr>';
+        } else {
+            document.getElementById('adminHeadRow').innerHTML =
+                '<th>Participant</th><th>CIN</th>' + res.eventDays.map(d => '<th>' + d + '</th>').join('');
+
+            document.getElementById('participantsTable').innerHTML = res.participants.map(p => {
+                const initial = (p.name || '?').trim().charAt(0).toUpperCase();
+                const attendance = res.eventDays.map(d => {
+                    const a = p.attendance[d];
+                    let cell = a.entry !== '-' ? '<span class="t-in">' + a.entry + '</span>' : '<span class="t-empty">—</span>';
+                    if (a.exit !== '-') cell += '<span class="t-out">' + a.exit + '</span>';
+                    return '<td><div class="cell-time">' + cell + '</div></td>';
+                }).join('');
+                return '<tr><td><div class="person-cell"><span class="avatar">' + initial + '</span>' + p.name + '</div></td><td>' + p.cin + '</td>' + attendance + '</tr>';
             }).join('');
-            return `<tr><td><b>${p.name}</b></td><td>${p.cin}</td>${attendance}</tr>`;
-        }).join('');
+        }
+    } else {
+        document.getElementById('participantsTable').innerHTML =
+            '<tr><td colspan="10"><div class="empty-state"><span class="material-symbols-outlined">error</span><p>' + ((res && res.message) || 'Erreur de chargement') + '</p></div></td></tr>';
+    }
+
+    if (statsRes && statsRes.success && dayRes) {
+        const today = statsRes.stats.byDay[dayRes];
+        document.getElementById('todayEntries').innerText = today ? today.entries : '0';
+        document.getElementById('todayExits').innerText = today ? today.exits : '0';
+        document.getElementById('todayInside').innerText = today ? today.inside : '0';
+    } else {
+        document.getElementById('todayEntries').innerText = '–';
+        document.getElementById('todayExits').innerText = '–';
+        document.getElementById('todayInside').innerText = '–';
+    }
+}
+
+// -------------------------------------------------------
+// PETITE TOUCHE : feuilles qui tombent à l'inscription
+// -------------------------------------------------------
+function launchLeaves() {
+    const colors = ['var(--leaf)', 'var(--marigold)', 'var(--leaf-bright)', 'var(--clay)'];
+    const container = document.getElementById('leafFall');
+    for (let i = 0; i < 10; i++) {
+        const leaf = document.createElement('i');
+        leaf.style.left = (Math.random() * 100) + '%';
+        leaf.style.background = colors[i % colors.length];
+        leaf.style.animationDuration = (1.8 + Math.random()) + 's';
+        leaf.style.animationDelay = (Math.random() * 0.3) + 's';
+        leaf.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+        container.appendChild(leaf);
+        setTimeout(() => leaf.remove(), 3500);
     }
 }
 </script>
